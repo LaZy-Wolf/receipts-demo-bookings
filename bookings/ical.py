@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 
 def escape(text: str) -> str:
-    return text
+    return text.replace(",", "\\,")
 
 
 def _stamp(dt: datetime) -> str:
