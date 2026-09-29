@@ -48,7 +48,8 @@ def room_json(room: Room) -> dict:
 
 def booking_json(b: Booking, room: Room) -> dict:
     return {"id": b.id, "room_id": b.room_id, "series_id": b.series_id, "title": b.title, "organizer": b.organizer,
-            "start": b.start.isoformat(), "end": b.end.isoformat(), "price_cents": b.price_cents,
+            "start": b.start.astimezone().isoformat(), "end": b.end.astimezone().isoformat(),
+            "price_cents": b.price_cents,
             "status": b.status, "fee_cents": b.fee_cents}
 
 
