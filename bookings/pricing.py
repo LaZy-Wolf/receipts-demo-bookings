@@ -12,7 +12,9 @@ def _touches_peak(start_local: datetime, end_local: datetime) -> bool:
 
 
 def price_cents(room, start_local: datetime, end_local: datetime) -> int:
-    """Price of a booking given in the room's local time."""
-    minutes = (end_local - start_local).total_seconds() / 60
-    rate = room.peak_rate_cents if _touches_peak(start_local, end_local) else room.hourly_rate_cents
-    return round(rate * minutes / 60)
+    """Price of a booking given in the room's local time, hour by hour."""
+    total = 0
+    for hour in range(start_local.hour, end_local.hour):
+        in_peak = PEAK_START.hour <= hour < PEAK_END.hour
+        total += room.peak_rate_cents if in_peak else room.hourly_rate_cents
+    return total
