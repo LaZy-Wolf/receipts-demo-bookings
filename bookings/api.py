@@ -108,6 +108,9 @@ def create_booking(room_id: int):
             return error(400, f"{field} is required")
     start_local = parse_local(data["start"], room)
     end_local = parse_local(data["end"], room)
+    attendees = int(data.get("attendees", 1))
+    if attendees > room.capacity:
+        return error(400, f"{room.name} holds {room.capacity} people, not {attendees}")
     count = int(data.get("repeat_weekly", 1))
     if not 1 <= count <= 52:
         return error(400, "repeat_weekly must be between 1 and 52")
